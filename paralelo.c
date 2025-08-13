@@ -53,7 +53,7 @@ void imprimirSemaforosBuffer(Interseccion* inter, char* buffer, size_t* offset) 
 void moverVehiculosBuffer(Interseccion* inter, char* buffer, size_t* offset) {
     for (int i = 0; i < NUM_SEMAFOROS; i++) {
         int mover = 0;
-        if (inter->semaforos[i].estado == 2) { 
+        if (inter->semaforos[i].estado == 2 || inter->semaforos[i].estado == 1) {
             mover = (inter->calles[i].cantidad_carros < VEHICULOS_POR_CICLO) ?
                     inter->calles[i].cantidad_carros : VEHICULOS_POR_CICLO;
         }
@@ -100,7 +100,7 @@ void simularInterseccionDinamica(Interseccion* inter, int num_ciclos) {
     omp_set_dynamic(1);
 
     for (int ciclo = 1; ciclo <= num_ciclos && contarVehiculos(inter) > 0; ciclo++) {
-        printf("\n=== CICLO %d ===\n", ciclo);
+        printf("\nCICLO %d\n", ciclo);
 
         char* bufferSemaforos = malloc(BUFFER_SIZE);
         char* bufferMovimientos = malloc(BUFFER_SIZE);
